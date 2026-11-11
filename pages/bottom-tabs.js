@@ -187,6 +187,7 @@ export function mount(root, { notify }) {
    if (from === to) { scheduleAuto(); return; }
    cancel();
    clearTimeout(replayTimer);
+   replayTimer = 0;
    const version = generation;
    selected = to;
    last = { from, to };
@@ -203,6 +204,7 @@ export function mount(root, { notify }) {
    if (!allowMotion) {
      outgoing.remove(); setProgress(100); setState('Motion off');
      playButton.innerHTML = `${icon('play')}<span>다시 재생</span>`;
+     playButton.setAttribute('aria-label', '모션 다시 재생');
      return;
    }
    const easing = easings[config.easing].value;
@@ -283,7 +285,7 @@ export function mount(root, { notify }) {
    stopAuto();
    if (!allowMotion) return;
    const position = Number(event.target.value);
-   if (!animations.length || animations.every(animation => animation.playState === 'finished')) transition(last.from, last.to);
+   if (replayTimer || !animations.length || animations.every(animation => animation.playState === 'finished')) transition(last.from, last.to);
    animations.forEach(animation => { animation.pause(); animation.currentTime = position / 100 * maxTime(); });
    cancelAnimationFrame(raf); setProgress(position); setState('Scrubbing'); showPlay(true);
  });
@@ -307,7 +309,13 @@ export function mount(root, { notify }) {
  });
  on(stage, 'pointercancel', () => { pointerStart = null; });
  on(document, 'visibilitychange', () => {
-   if (document.hidden) { stopAuto(); animations.forEach(animation => { if (animation.playState === 'running') animation.pause(); }); cancelAnimationFrame(raf); showPlay(true); setState('Paused'); }
+   if (document.hidden) {
+     stopAuto();
+     if (animations.some(animation => animation.playState === 'running')) {
+       animations.forEach(animation => animation.pause());
+       cancelAnimationFrame(raf); showPlay(true); setState('Paused');
+     }
+   }
  });
  const observer = new ResizeObserver(() => { if (!animations.some(animation => ['running','paused'].includes(animation.playState))) selectBar(selected); });
  observer.observe($('.phone-tabbar'));
