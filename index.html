@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#161616">
+  <meta name="description" content="직접 재생하고, 속도를 바꾸고, 원하는 감각을 찾는 모션 인터랙션 실험실.">
+  <title>Motion Lab — Interaction studies</title>
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">실험으로 건너뛰기</a>
+  <header class="site-header">
+    <a class="brand" href="#/bottom-tabs" aria-label="Motion Lab 홈"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2v9M16 21v9M2 16h9M21 16h9M6 6l7 7M19 19l7 7M26 6l-7 7M13 19l-7 7"/></svg><span>MOTION<span class="brand-light">LAB</span></span></a>
+    <nav class="header-nav" aria-label="주 메뉴"><a href="#/overview">Overview</a><a href="#/bottom-tabs" class="active">Experiments <span class="tiny-dot"></span></a></nav>
+    <a class="repo-link" href="https://github.com/imnamooo/motionlab" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+    <button class="mobile-menu icon-button" aria-label="실험 목록 열기" aria-expanded="false">☰</button>
+  </header>
+  <div class="site-layout">
+    <aside class="sidebar" aria-label="실험 목록">
+      <a class="overview-link" href="#/overview"><span>Overview</span><span class="nav-count" id="experiment-count">01</span></a>
+      <p class="sidebar-heading">INTERACTION STUDIES</p>
+      <nav id="experiment-nav" aria-label="모션 실험"></nav>
+      <div class="sidebar-footer"><span class="status-dot"></span> A work in motion.<p>하나씩 쌓아가는<br>인터랙션 실험 기록.</p><a href="https://github.com/imnamooo/motionlab#새-실험-추가" target="_blank" rel="noopener noreferrer">실험 추가 가이드 ↗</a></div>
+    </aside>
+    <main id="main" tabindex="-1"></main>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
